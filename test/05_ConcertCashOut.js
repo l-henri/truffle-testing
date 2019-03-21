@@ -71,6 +71,11 @@ contract('Concert management functions', function (accounts) {
         assert.equal(ticketSystemFinalBalance, 0)
         assert.equal(venueFinalBalance, expectedAccount0Balance)
 
+        concertInfo = await TicketingSystemInstance.concertsRegister(1)
+        // checking that the tickets that were sold are accounted in artist profile
+        artistInfo = await TicketingSystemInstance.artistsRegister(1)
+        assert.equal(artistInfo.totalTicketSold, 2)
+
     })
 
 })
