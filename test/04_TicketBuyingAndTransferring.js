@@ -33,6 +33,7 @@ contract('Concert management functions', function (accounts) {
     it('Buying tickets', async function (){
 
     // Buying 2 tickets
+    // function buyTicket(uint _concertId) public payable
     await TicketingSystemInstance.buyTicket(1, {from: accounts[3], value: concertPrice})
     await TicketingSystemInstance.buyTicket(1, {from: accounts[4], value: concertPrice})
 
@@ -72,6 +73,7 @@ contract('Concert management functions', function (accounts) {
     // Buying 2 tickets
     await TicketingSystemInstance.buyTicket(1, {from: accounts[3], value: concertPrice})
     // Trying to use ticket I do not own
+    // function transferTicket(uint _ticketId, address payable _newOwner)
     await tryCatch(TicketingSystemInstance.transferTicket(1, accounts[5], {from: accounts[5]}), errTypes.revert);
 
     // Transferring a ticket

@@ -1,3 +1,4 @@
 contracts/*
 build
 truffle*
+node_*

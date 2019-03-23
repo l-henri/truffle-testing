@@ -41,22 +41,22 @@ contract('Concert management functions', function (accounts) {
     it('Cashing out concert', async function (){
 
         // Checking initial balance
-        account10InitialBalance = await web3.eth.getBalance(accounts[10])
+        account9InitialBalance = await web3.eth.getBalance(accounts[9])
         ticketSystemInitialBalance = await web3.eth.getBalance(TicketingSystemInstance.address)
         venueInitialBalance = await web3.eth.getBalance(accounts[0])
-
         // Trying to cash out before the start of the concert
-        await tryCatch(TicketingSystemInstance.cashOutConcert(1, accounts[10], {from: accounts[1]}), errTypes.revert);
-
+        // function cashOutConcert(uint _concertId, address payable _cashOutAddress)
+        await tryCatch(TicketingSystemInstance.cashOutConcert(1, accounts[9], {from: accounts[1]}), errTypes.revert);
+        
         // Waiting for the concert to start
         wait(fifteenSeconds*1000);
 
         // Trying to cash out with another acount
-        await tryCatch(TicketingSystemInstance.cashOutConcert(1, accounts[10], {from: accounts[2]}), errTypes.revert);
+        await tryCatch(TicketingSystemInstance.cashOutConcert(1, accounts[9], {from: accounts[2]}), errTypes.revert);
 
         // Cashing out 
-        await TicketingSystemInstance.cashOutConcert(1, accounts[10], {from: accounts[1]})
-        account10FinalBalance = await web3.eth.getBalance(accounts[10])
+        await TicketingSystemInstance.cashOutConcert(1, accounts[9], {from: accounts[1]})
+        account9FinalBalance = await web3.eth.getBalance(accounts[9])
         ticketSystemFinalBalance = await web3.eth.getBalance(TicketingSystemInstance.address)
         venueFinalBalance = await web3.eth.getBalance(accounts[0])
 
@@ -65,9 +65,9 @@ contract('Concert management functions', function (accounts) {
         venueShare = totalTicketSale * venue1comission / 10000
         artistShare = totalTicketSale - venueShare
 
-        expectedAccount10Balance = parseInt(account10InitialBalance) + artistShare
+        expectedAccount9Balance = parseInt(account9InitialBalance) + artistShare
         expectedAccount0Balance = parseInt(venueInitialBalance) + venueShare
-        assert.equal(account10FinalBalance, expectedAccount10Balance)
+        assert.equal(account9FinalBalance, expectedAccount9Balance)
         assert.equal(ticketSystemFinalBalance, 0)
         assert.equal(venueFinalBalance, expectedAccount0Balance)
 

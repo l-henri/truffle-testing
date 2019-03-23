@@ -21,6 +21,7 @@ contract('Creating Venue profile', function (accounts) {
     venue2comission = 1500
 
     // Declaring venues
+    //function createVenue(bytes32 _name, uint _capacity, uint _standardComission) 
     await TicketingSystemInstance.createVenue(web3.utils.fromAscii(venue1Name), venue1Capacity, venue1comission, {from: accounts[0]}); 
     await TicketingSystemInstance.createVenue(web3.utils.fromAscii(venue2Name), venue2Capacity, venue2comission, {from: accounts[1]}); 
 
@@ -47,6 +48,7 @@ contract('Creating Venue profile', function (accounts) {
 
     await TicketingSystemInstance.createVenue(web3.utils.fromAscii(venue1Name), venue1Capacity, venue1comission, {from: accounts[0]}); 
 
+    // function modifyVenue(uint _venueId, bytes32 _name, uint _capacity, uint _standardComission, address payable _newOwner) 
     await tryCatch(TicketingSystemInstance.modifyVenue(1, web3.utils.fromAscii(venue1Name), venue1Capacity, venue1comission, accounts[2], {from: accounts[2]}), errTypes.revert);
     await TicketingSystemInstance.modifyVenue(1, web3.utils.fromAscii(venue2Name), venue2Capacity, venue2comission, accounts[2], {from: accounts[0]})
 

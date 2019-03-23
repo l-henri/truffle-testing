@@ -42,6 +42,7 @@ contract('Concert management functions', function (accounts) {
     assert.equal(ticketInfo.isAvailableForSale, false)
 
     // Offering a ticket to sell
+    // function offerTicketForSale(uint _ticketId, uint _salePrice)
     await TicketingSystemInstance.offerTicketForSale(1, concertPrice - 2, {from: accounts[3]})
 
     // Verifying ticket infos
@@ -66,6 +67,7 @@ contract('Concert management functions', function (accounts) {
     await tryCatch(TicketingSystemInstance.buySecondHandTicket(1, {from: accounts[4], value: concertPrice - 20}), errTypes.revert);
 
     // Buying the ticket
+    // function buySecondHandTicket(uint _ticketId)
     await TicketingSystemInstance.buySecondHandTicket(1, {from: accounts[4], value: concertPrice - 2})
     })
 

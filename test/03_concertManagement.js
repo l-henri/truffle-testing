@@ -30,6 +30,7 @@ contract('Concert management functions', function (accounts) {
     // Anyone can declare a concert for any artist they want.
     // Tickets can be sold before the venue or the artists validated their participation. This is to incentivize the artists
     // and venue to look at potential opportunities, with actual funds locked in waiting for them.
+    // function createConcert(uint _artistId, uint _venueId, uint _concertDate, uint _ticketPrice)
     oneWeek = 60*60*24*7
     concertDate = Math.floor((new Date).getTime()/1000 + oneWeek);
     await TicketingSystemInstance.createConcert(1,1, concertDate, 1000, {from: accounts[1]})
@@ -53,6 +54,7 @@ contract('Concert management functions', function (accounts) {
     assert.equal(concert2Info.validatedByVenue, false)
 
     // Artist accepts concert 2 and venue accepts concert 1 and 2
+    //function validateConcert(uint _concertId)
     await TicketingSystemInstance.validateConcert(1, {from: accounts[0]})
     await TicketingSystemInstance.validateConcert(2, {from: accounts[0]})
     await TicketingSystemInstance.validateConcert(2, {from: accounts[1]})
@@ -81,7 +83,8 @@ contract('Concert management functions', function (accounts) {
     assert.equal(concert1Info.totalSoldTicket, 0)
     assert.equal(concert1Info.totalMoneyCollected, 0)
 
-    // Emitting 5 tickets
+    // Emitting 5 tickets. Only artists can emit tickets.
+    // function emitTicket(uint _concertId, address payable _ticketOwner)
     await TicketingSystemInstance.emitTicket(1,  accounts[2],{from: accounts[1]})
     await TicketingSystemInstance.emitTicket(1,  accounts[3],{from: accounts[1]})
     await TicketingSystemInstance.emitTicket(1,  accounts[4],{from: accounts[1]})
@@ -128,6 +131,7 @@ contract('Concert management functions', function (accounts) {
     await TicketingSystemInstance.emitTicket(2,  accounts[4],{from: accounts[1]})
 
     // Trying to use ticket I do not own
+    // function useTicket(uint _ticketId)
     await tryCatch(TicketingSystemInstance.useTicket(1, {from: accounts[5]}), errTypes.revert);
     // Trying to use ticket before the day of the event
     await tryCatch(TicketingSystemInstance.useTicket(1, {from: accounts[3]}), errTypes.revert);

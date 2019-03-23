@@ -18,6 +18,7 @@ contract('Creating artist profile', function (accounts) {
     artistCategory = 1
 
     // Creating an artist profile
+    // function createConcert(uint _artistId, uint _venueId, uint _concertDate, uint _ticketPrice)
     await TicketingSystemInstance.createArtist(web3.utils.fromAscii(artist1Name), artistCategory, {from: accounts[0]}); 
     await TicketingSystemInstance.createArtist(web3.utils.fromAscii(artist2Name), artistCategory, {from: accounts[1]}); 
 
@@ -49,6 +50,7 @@ contract('Creating artist profile', function (accounts) {
     assert.equal(web3.utils.toUtf8(retrievedArtist1Info.name),artist1Name)
     
     // Trying to modify artists with an account different than owner
+    //function modifyArtist(uint _artistId, bytes32 _name, uint _artistCategory, address payable _newOwner) 
     await tryCatch(TicketingSystemInstance.modifyArtist(1, web3.utils.fromAscii(artist2Name), newArtistCategory, accounts[2], {from: accounts[2]} ), errTypes.revert);
     
     // Modifying artist profile
