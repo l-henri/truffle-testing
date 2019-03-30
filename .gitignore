@@ -1,4 +1,4 @@
-contracts/*
+contracts/tick*
 build
 truffle*
 node_*
